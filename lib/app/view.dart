@@ -1,4 +1,4 @@
-export 'splash_view/splash_view.dart';
-export 'wel_view/welcome_view.dart';
-export 'home_view/home_view.dart';
-export 'pro/pro_view.dart';
+export 'splash/splash_view.dart';
+export 'home/home_view.dart';
+export 'info_view/info_view.dart';
+export 'no_ads_view/no_ads_view.dart';

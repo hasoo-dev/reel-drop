@@ -7,7 +7,7 @@ class LocalStorage {
 
   /// Sets a key-value pair in the local storage.
   ///
-  /// Returns a Future<bool> indicating the success of the operation.
+  /// Returns a Future indicating the success of the operation.
   Future<bool> setValue(String key, String value) async {
     await storage.write(key: key, value: value);
     return true;
@@ -15,14 +15,14 @@ class LocalStorage {
 
   /// Reads the value associated with the given key from the local storage.
   ///
-  /// Returns a Future<dynamic> representing the value stored for the key.
+  /// Returns a Futu representing the value stored for the key.
   Future<dynamic> readValue(String key) async {
     return await storage.read(key: key);
   }
 
   /// Clears the value associated with the given key from the local storage.
   ///
-  /// Returns a Future<bool> indicating the success of the operation.
+  /// Returns a Future  indicating the success of the operation.
   Future<bool> clearValue(String key) async {
     await storage.delete(key: key);
     return true;

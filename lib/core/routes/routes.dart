@@ -10,18 +10,19 @@ class Routes {
           builder: (BuildContext context) => const SplashView(),
         );
 
-      case RoutesName.welcome:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const WelcomeView(),
-        );
       case RoutesName.home:
         return MaterialPageRoute(
           builder: (BuildContext context) => const HomeView(),
         );
-        case RoutesName.pro:
-          return MaterialPageRoute(
-            builder: (BuildContext context) => const ProView(),
-          );
+      case RoutesName.info:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const InfoView(),
+        );
+      case RoutesName.noAds:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const NoAdsView(),
+        );
+
       default:
         return MaterialPageRoute(
           builder: (_) {

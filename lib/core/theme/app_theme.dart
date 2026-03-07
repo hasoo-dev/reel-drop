@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:video_downloder/core/theme/app_colors.dart';
 
@@ -8,15 +10,19 @@ class AppTheme {
       fontFamily: 'lufga',
       useMaterial3: true,
       brightness: Brightness.light,
-      primaryColor: AppColors.primary,
+      primaryColor: AppColors.orange,
+      
       scaffoldBackgroundColor: AppColors.lightBackground,
       colorScheme: const ColorScheme.light(
-        primary: AppColors.primary,
+        primary: AppColors.orange,
+        primaryContainer: AppColors.primarySoft,
+        secondaryContainer: AppColors.accentSoft,
+        tertiaryContainer: AppColors.purpleGlow,
+        shadow: Colors.black,
         secondary: AppColors.accent,
         surface: AppColors.lightSurface,
         onSurface: AppColors.lightText,
         error: AppColors.error,
-        background: AppColors.lightBackground
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.lightBackground,
@@ -36,9 +42,13 @@ class AppTheme {
           fontFamily: 'lufga',
           fontWeight: FontWeight.bold,
         ),
-        bodyLarge: TextStyle(color: AppColors.lightText, fontSize: 16, fontFamily: 'lufga',),
+        bodyLarge: TextStyle(
+          color: AppColors.lightText,
+          fontSize: 16,
+          fontFamily: 'lufga',
+        ),
         bodyMedium: TextStyle(
-           fontFamily: 'lufga',
+          fontFamily: 'lufga',
           color: AppColors.lightSecondaryText,
           fontSize: 14,
         ),
@@ -63,14 +73,16 @@ class AppTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       primaryColor: AppColors.primary,
-      scaffoldBackgroundColor: AppColors.darkBackground,
+      
+      scaffoldBackgroundColor: Color.fromARGB(255, 0, 0, 0),
       colorScheme: const ColorScheme.dark(
-        primary: AppColors.primary,
+        primary: Color.fromARGB(255, 249, 128, 59),
         secondary: AppColors.accent,
         surface: AppColors.darkSurface,
-        onSurface: AppColors.darkText,
+        onSurface: AppColors.darkText, 
+        shadow: Colors.white,
         error: AppColors.error,
-        background: AppColors.darkBackground
+        background: AppColors.darkBackground,
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.darkBackground,
