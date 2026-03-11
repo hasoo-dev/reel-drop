@@ -177,6 +177,7 @@ class VideoDetailsBottomSheet extends StatelessWidget {
                             videoUrl: f.url!,
                             title: data.title ?? "video",
                             ext: f.ext ?? "mp4",
+                            uploader: data.uploader,
                           ),
                         );
                         Navigator.pop(context);

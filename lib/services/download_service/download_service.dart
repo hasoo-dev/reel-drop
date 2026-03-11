@@ -2,12 +2,19 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:gal/gal.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'package:video_downloder/core/utils/app_url/app_url.dart';
 
 class DownloadService {
-  final Dio _dio = Dio();
+  final Dio _dio = Dio(BaseOptions(
+    connectTimeout: const Duration(seconds: 30),
+    receiveTimeout: const Duration(seconds: 120),
+  ));
+
+  static bool _isProxyRequired(String url) {
+    final lower = url.toLowerCase();
+    return lower.contains('pinimg.com') || lower.contains('pinterest');
+  }
 
   Future<void> downloadAndSaveVideo({
     required String url,
@@ -30,11 +37,15 @@ class DownloadService {
       print("DownloadService: savePath: $savePath");
 
       // 3. Construct Download URL
-      // We now default to UNIVERSAL PROXYING for all platforms to ensure max reliability.
-      final encodedUrl = Uri.encodeComponent(url);
-      final downloadUrl = '${AppUrl.proxy}$encodedUrl';
-      
-      print("DownloadService: Routing through universal proxy -> $downloadUrl");
+      // We only apply the proxy if the URL isn't already pointing to our backend proxy.
+      String downloadUrl = url;
+      if (!url.startsWith(AppUrl.baseUrl)) {
+        final encodedUrl = Uri.encodeComponent(url);
+        downloadUrl = '${AppUrl.proxy}$encodedUrl';
+        print("DownloadService: Routing through universal proxy -> $downloadUrl");
+      } else {
+        print("DownloadService: Using direct backend URL -> $downloadUrl");
+      }
 
       // 4. Download File
       try {
@@ -42,11 +53,11 @@ class DownloadService {
           downloadUrl,
           savePath,
           options: Options(
+            // connectTimeout: const Duration(seconds: 30),
+            // receiveTimeout: const Duration(seconds: 120),
             headers: {
               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             },
-            sendTimeout: const Duration(seconds: 15),
-            receiveTimeout: const Duration(seconds: 30),
           ),
           onReceiveProgress: (count, total) {
             if (total != -1) {
@@ -56,14 +67,20 @@ class DownloadService {
         );
         print("DownloadService: Download status: ${response.statusCode}");
       } catch (e) {
+        if (_isProxyRequired(url)) {
+          print("DownloadService: Proxy failed for proxy-required URL (e.g. Pinterest). No direct fallback.");
+          rethrow;
+        }
         print("DownloadService: Proxy failed, attempting direct download as fallback... Error: $e");
-        // Fallback to direct download if proxy fails
         await _dio.download(
           url,
           savePath,
           options: Options(
+            connectTimeout: const Duration(seconds: 30),
+            receiveTimeout: const Duration(seconds: 120),
             headers: {
               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+              'Accept': 'video/mp4,video/mov,video/webm,video/mkv,video/avi,video/flv,video/3gp,video/mpeg,video/quicktime',
             },
           ),
           onReceiveProgress: (count, total) {

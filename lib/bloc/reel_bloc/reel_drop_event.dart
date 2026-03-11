@@ -11,11 +11,13 @@ class DownloadVideo extends ReelDropEvent {
   final String videoUrl;
   final String title;
   final String ext;
-  
+  final String? uploader;
+
   DownloadVideo({
     required super.url,
     required this.videoUrl,
     required this.title,
     required this.ext,
+    this.uploader,
   });
 }

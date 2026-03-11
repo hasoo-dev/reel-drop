@@ -37,7 +37,14 @@ class ReelDropBloc extends Bloc<ReelDropEvent, ReelDropState> {
     emit(ReelDropDownloading(currentProgress: 0.0, downloadResponse: currentResponse));
     
     try {
-      final fileName = "${event.title.replaceAll(RegExp(r'[^\w\s]+'), '_')}.${event.ext}";
+      final sanitized = event.title.replaceAll(RegExp(r'[^\w\s]+'), '_').replaceAll(RegExp(r'_+'), '_').trim();
+      const maxLength = 150; // Avoid "File name too long" (errno 36)
+      String baseName = sanitized.length > maxLength ? sanitized.substring(0, maxLength).trimRight() : sanitized;
+      if (baseName.isEmpty || RegExp(r'^_+$').hasMatch(baseName)) {
+        final safeUploader = (event.uploader ?? 'video').replaceAll(RegExp(r'[^\w\s]+'), '_').trim();
+        baseName = '${safeUploader.isNotEmpty ? safeUploader : 'video'}_${DateTime.now().millisecondsSinceEpoch}';
+      }
+      final fileName = '$baseName.${event.ext}';
       await _downloadService.downloadAndSaveVideo(
         url: event.videoUrl,
         fileName: fileName,
@@ -48,6 +55,11 @@ class ReelDropBloc extends Bloc<ReelDropEvent, ReelDropState> {
       emit(ReelDropDownloaded());
     } catch (e) {
       String errorMessage = _mapErrorToMessage(e);
+      final isPinterest = (event.videoUrl.toLowerCase().contains('pinimg.com') ||
+          event.videoUrl.toLowerCase().contains('pinterest'));
+      if (isPinterest && errorMessage.contains('Network error')) {
+        errorMessage = "Pinterest proxy failed. Please try again or ensure the server is reachable.";
+      }
       emit(ReelDropError(error: "Download failed: $errorMessage"));
     }
   }
@@ -60,6 +72,8 @@ class ReelDropBloc extends Bloc<ReelDropEvent, ReelDropState> {
         return "Server error. This video platform might be down.";
       } else if (e.response?.statusCode == 404) {
         return "Video not found. Please check the URL.";
+      } else if (e.response?.statusCode == 403) {
+        return "This platform blocks direct downloads. Try again or use another link.";
       }
       return "Network error. Please try again.";
     }

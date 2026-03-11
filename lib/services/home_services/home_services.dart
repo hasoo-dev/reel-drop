@@ -22,7 +22,7 @@ class HomeServices {
         if (url.endsWith('?')) url = url.substring(0, url.length - 1);
         print("HomeServices: Cleaned Instagram URL -> $url");
       }
-    } else if (url.contains('tiktok.com')) {
+    } else if (url.contains('vt.tiktok.com')) {
       final uri = Uri.parse(url);
       if (uri.queryParameters.isNotEmpty) {
         url = uri.replace(queryParameters: {}).toString();
@@ -37,7 +37,7 @@ class HomeServices {
   String? detectPlatformFromUrl(String url) {
     final lower = url.toLowerCase();
     if (lower.contains('instagram.com') || lower.contains('instagr.am')) return 'Instagram';
-    if (lower.contains('tiktok.com')) return 'TikTok';
+    if (lower.contains('vt.tiktok.com')|| lower.contains('tiktok.com')) return 'TikTok';
     if (lower.contains('facebook.com') || lower.contains('fb.watch') || lower.contains('fb.com')) return 'Facebook';
     if (lower.contains('snapchat.com')) return 'Snapchat';
     if (lower.contains('pin.it') || lower.contains('pinterest.com')) return 'Pinterest';

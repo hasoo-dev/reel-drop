@@ -1,5 +1,5 @@
 class AppUrl {
-  static var baseUrl = 'http://192.168.18.4:3000';
+  static var baseUrl = 'https://reeldropbackend-production.up.railway.app';
   static var health = '$baseUrl/api/video/health';
   static var platform = '$baseUrl/api/video/platforms';
   static var info = '$baseUrl/api/video/info';
