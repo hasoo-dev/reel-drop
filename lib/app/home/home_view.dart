@@ -87,8 +87,12 @@ class _HomeViewState extends State<HomeView> {
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       floatingActionButton: FloatingActionButton.large(
         backgroundColor: Colors.transparent,
-        autofocus: true,
+        
+        autofocus: false,
         elevation: 0,
+         highlightElevation: 0,
+  hoverElevation: 0,
+  focusElevation: 0,
         onPressed: () => homeServices.openWhatsAppCommunity(),
 
         heroTag: "whatsapp",

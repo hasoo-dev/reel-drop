@@ -30,10 +30,10 @@ class NetworkApiService implements BaseApiServices {
       responseJson = returnResponse(response);
     } on SocketException catch (e) {
       _logger.e('SocketException (GET): ${e.message}, host: ${e.address?.host}, port: ${e.port}');
-      throw NoInternetException('Cannot reach server at ${Uri.parse(url).host}. Check IP/Firewall.');
+      throw NoInternetException('Cannot reach server. Please check your internet connection or server status.');
     } on TimeoutException {
       _logger.e('TimeoutException (GET) after ${stopwatch.elapsed.inSeconds}s for URL: $url');
-      throw FetchDataException('Network Timeout (120s) for ${Uri.parse(url).host}. Server not responding.');
+      throw FetchDataException('Network Timeout. The server is taking too long to respond.');
     }
 
     if (kDebugMode) {
@@ -71,10 +71,10 @@ class NetworkApiService implements BaseApiServices {
       responseJson = returnResponse(response);
     } on SocketException catch (e) {
       _logger.e('SocketException (POST): ${e.message}, host: ${e.address?.host}, port: ${e.port}');
-      throw NoInternetException('Cannot reach server at ${Uri.parse(url).host}. Ensure PC and Phone are on same WiFi.');
+      throw NoInternetException('Cannot reach server. Please check your internet connection or server status.');
     } on TimeoutException {
       _logger.e('TimeoutException (POST) after ${stopwatch.elapsed.inSeconds}s for URL: $url');
-      throw FetchDataException('Network Timeout (120s). PC at ${Uri.parse(url).host} might be blocking connections.');
+      throw FetchDataException('Network Timeout. The server is taking too long to respond.');
     }
 
     if (kDebugMode) {
@@ -91,16 +91,24 @@ class NetworkApiService implements BaseApiServices {
 
     switch (response.statusCode) {
       case 200:
-      case 400:
         return jsonDecode(response.body);
+      case 400:
+        // Deciding whether to return the body (if it contains JSON error) or throw
+        try {
+          return jsonDecode(response.body);
+        } catch (_) {
+          throw BadRequestException(response.body.toString());
+        }
       case 401:
-        throw BadRequestException(response.body.toString());
-      case 500:
-      case 404:
+      case 403:
         throw UnauthorisedException(response.body.toString());
+      case 404:
+        throw FetchDataException('Endpoint not found (404)');
+      case 500:
+        throw FetchDataException('Internal Server Error (500): ${response.body}');
       default:
         _logger.w('Unexpected Status Code: ${response.statusCode}, Body: ${response.body}');
-        throw FetchDataException('Error communicates with server (${response.statusCode})');
+        throw FetchDataException('Error communicating with server (${response.statusCode})');
     }
   }
 }
