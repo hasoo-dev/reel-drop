@@ -1,0 +1,34 @@
+﻿git : POST 
+git-receive-pack 
+(chunked)
+At line:1 char:1
++ git push --verbose 
+origin main > 
+verbose_push.txt 2>&1; 
+Get-Content v ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (POST git-rece   
+ ive-pack (chunked)    
+:String) [], Remot    
+eException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+error: RPC failed; 
+HTTP 408 curl 22 The 
+requested URL returned 
+error: 408
+send-pack: unexpected 
+disconnect while 
+reading sideband packet
+fatal: the remote end 
+hung up unexpectedly
+Pushing to https://gith
+ub.com/hasooDev/reel-dr
+op.git
+Everything up-to-date
