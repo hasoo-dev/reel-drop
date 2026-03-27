@@ -7,6 +7,7 @@ import 'package:video_downloder/core/routes/routes_name.dart';
 import 'package:video_downloder/core/utils/extensions/flush_bar_extension.dart';
 import 'package:video_downloder/services/home_services/home_services.dart';
 import 'package:video_downloder/widgets/video_details_bottom_sheet.dart';
+import 'package:video_downloder/core/theme/theme_controller.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -71,15 +72,25 @@ class _HomeViewState extends State<HomeView> {
         toolbarHeight: 43,
 
         actions: [
-          GestureDetector(
-            onTap: () => Navigator.pushNamed(context, RoutesName.noAds),
-            child: Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Image.asset(
-                "assets/icons/ic_ads.png",
-                color: theme.colorScheme.primary,
-              ),
-            ),
+          ValueListenableBuilder<ThemeMode>(
+            valueListenable: ThemeController.themeMode,
+            builder: (context, themeMode, _) {
+              final isDarkMode = themeMode == ThemeMode.dark ||
+                  (themeMode == ThemeMode.system &&
+                      MediaQuery.platformBrightnessOf(context) == Brightness.dark);
+
+              return GestureDetector(
+                onTap: () => ThemeController.toggle(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Icon(
+                    isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                    color: theme.colorScheme.primary,
+                    size: 30,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -96,7 +107,7 @@ class _HomeViewState extends State<HomeView> {
         onPressed: () => homeServices.openWhatsAppCommunity(),
 
         heroTag: "whatsapp",
-        child: Image.asset("assets/icons/ic_whats.png", height: 33),
+        child: Image.asset("assets/icons/ic_whats.png", height: 53),
       ),
       body: SafeArea(
         child: Padding(
@@ -251,29 +262,30 @@ class _HomeViewState extends State<HomeView> {
                     );
                   },
                 ),
-                const SizedBox(height: 24),
-                if (isDownloading || isFetching) ...[
-                  LinearProgressIndicator(
-                    value: isFetching ? null : state.progress,
-                    minHeight: 6,
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    isFetching
-                        ? 'Fetching video details...'
-                        : 'Downloading from ${_currentPlatform ?? "Video"} • ${(state.progress * 100).toStringAsFixed(0)}%',
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-                SizedBox(height: MediaQuery.of(context).size.height * 0.12),
-                Image.asset("assets/icons/ic_sprinkles.png", height: 25),
-                const SizedBox(height: 12),
+                // const SizedBox(height: 24),
+                // if (isDownloading || isFetching) ...[
+                //   // LinearProgressIndicator(
+                //   //   value: isFetching ? null : state.progress,
+                //   //   minHeight: 6,
+                //   //   borderRadius: BorderRadius.circular(999),
+                //   // ),
+                //   const SizedBox(height: 8),
+                //   Text(
+                //     isFetching
+                //         ? 'Fetching video details...'
+                //         : 'Downloading from ${_currentPlatform ?? "Video"} • ${(state.progress * 100).toStringAsFixed(0)}%',
+                //     style: theme.textTheme.bodySmall?.copyWith(
+                //       fontWeight: FontWeight.w600,
+                //     ),
+                //   ),
+                // ],
+                SizedBox(height: MediaQuery.of(context).size.height * 0.22),
+                 
+                
                 Text(
                   "ReelDrop",
                   style: theme.textTheme.bodySmall?.copyWith(
+                    fontSize: 10,
                     color: theme.colorScheme.onSurface.withOpacity(0.5),
                     fontWeight: FontWeight.w600,
                   ),
