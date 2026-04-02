@@ -65,6 +65,11 @@ class ReelDropBloc extends Bloc<ReelDropEvent, ReelDropState> {
   }
 
   String _mapErrorToMessage(dynamic e) {
+    final eString = e.toString().toLowerCase();
+    if (eString.contains('bot') || eString.contains('robot') || eString.contains('sign in to confirm')) {
+      return "YOUTUBE_BOT_DETECTION";
+    }
+
     if (e is DioException) {
       if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
         return "Connection timed out. Check your internet.";

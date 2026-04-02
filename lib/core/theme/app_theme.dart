@@ -22,6 +22,7 @@ class AppTheme {
         secondary: AppColors.accent,
         surface: AppColors.lightSurface,
         onSurface: AppColors.lightText,
+        scrim: Colors.black,
         error: AppColors.error,
       ),
       appBarTheme: const AppBarTheme(
@@ -82,6 +83,7 @@ class AppTheme {
         onSurface: AppColors.darkText, 
         shadow: Colors.white,
         error: AppColors.error,
+        scrim: Colors.white,
         background: AppColors.darkBackground,
       ),
       appBarTheme: const AppBarTheme(

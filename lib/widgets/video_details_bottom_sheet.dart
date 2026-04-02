@@ -70,7 +70,7 @@ class VideoDetailsBottomSheet extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  platform,
+                  'ReelDrop',
                   style: theme.textTheme.labelMedium?.copyWith(
                     color: theme.colorScheme.primary,
                     fontWeight: FontWeight.bold,
