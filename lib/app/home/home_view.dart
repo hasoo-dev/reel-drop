@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:video_downloder/bloc/reel_bloc/reel_drop_bloc.dart';
 import 'package:video_downloder/bloc/reel_bloc/reel_drop_event.dart';
 import 'package:video_downloder/bloc/reel_bloc/reel_drop_state.dart';
@@ -122,7 +123,7 @@ class _HomeViewState extends State<HomeView> {
             onPressed: () => homeServices.openWhatsAppCommunity(),
 
             heroTag: "whatsapp",
-            child: Image.asset("assets/icons/ic_whats.png", height:40),
+            child: Image.asset("assets/icons/ic_whats.png", height: 40),
           ),
           body: SafeArea(
             child: Padding(
@@ -272,20 +273,23 @@ class _HomeViewState extends State<HomeView> {
                                               ),
                                         )
                                       else
-                                      Image.asset("assets/icons/ic_tap.png",height: 63,),
-                                        // Icon(
-                                        //   Icons.touch_app_rounded,
-                                        //   size: 48,
-                                        //   color: Colors.white.withOpacity(0.8),
-                                        // ),
+                                        Image.asset(
+                                          "assets/icons/ic_tap.png",
+                                          height: 63,
+                                        ),
+                                      // Icon(
+                                      //   Icons.touch_app_rounded,
+                                      //   size: 48,
+                                      //   color: Colors.white.withOpacity(0.8),
+                                      // ),
                                       const SizedBox(height: 32),
 
                                       Text(
                                         isFetching
                                             ? "Fetching..."
                                             : isDownloading
-                                            ? "Dropp..."
-                                            : "Reel It..",
+                                            ? "Dripping..."
+                                            : "Push It..",
                                         style: theme.textTheme.labelLarge
                                             ?.copyWith(
                                               color: Colors.white,
@@ -304,16 +308,8 @@ class _HomeViewState extends State<HomeView> {
                     ),
 
                     SizedBox(height: MediaQuery.of(context).size.height * 0.20),
-                     Branding(),
+                    Branding(),
 
-                    // Text(
-                    //   "ReelDrop",
-                    //   style: theme.textTheme.bodySmall?.copyWith(
-                    //     fontSize: 10,
-                    //     color: theme.colorScheme.onSurface.withOpacity(0.5),
-                    //     fontWeight: FontWeight.w600,
-                    //   ),
-                    // ),
                     const SizedBox(height: 16),
                   ],
                 ),
