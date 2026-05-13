@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:video_downloder/widgets/reel_drop_info_content.dart';
- 
 
 class InfoView extends StatelessWidget {
   const InfoView({super.key});
@@ -13,6 +12,9 @@ class InfoView extends StatelessWidget {
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.transparent,
         leadingWidth: 90,
         leading: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -22,6 +24,7 @@ class InfoView extends StatelessWidget {
               "Skip",
               style: theme.textTheme.bodyLarge!.copyWith(
                 fontSize: 18,
+fontFamily: "beba",
                 fontWeight: FontWeight.w700,
                 color: theme.colorScheme.primary,
               ),
@@ -33,6 +36,7 @@ class InfoView extends StatelessWidget {
           "Info",
           style: theme.textTheme.bodyLarge!.copyWith(
             fontSize: 20,
+            fontFamily: "beba",
             fontWeight: FontWeight.w800,
             color: theme.colorScheme.primary,
           ),

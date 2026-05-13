@@ -6,6 +6,7 @@ class AppColors {
   static const Color primarySoft = Color(0xFF1D4ED8); // softer primary for backgrounds
   static const Color accent = Color(0xFF38BDF8); // cyan accent for highlights
   static const Color accentSoft = Color(0xFF0EA5E9);
+  static const Color logoColor=Color(0xffCEFF00);
 
   // Supporting brand colors
   static const Color purpleGlow = Color(0xFF6366F1);

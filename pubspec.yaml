@@ -1,5 +1,5 @@
 name: video_downloder
-description: "A new Flutter project."
+description: "A Socail Media App whihc is abouy the download the universallt download the Video in brillent quality"
  
 publish_to: 'none'  
  
@@ -45,17 +45,7 @@ flutter:
     - assets/images/
     - assets/icons/
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/to/resolution-aware-images
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/to/asset-from-package
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
+  
   fonts:
     - family: lufga
       fonts:
@@ -67,6 +57,14 @@ flutter:
           weight: 400
         - asset: fonts/LufgaMedium.ttf
           weight: 500
+    - family: beba
+      fonts:
+        - asset: fonts/BebasNeueRegular.ttf
+          weight: 400
+         
+         
+
+
          
      
   #

@@ -38,39 +38,50 @@ class _SplashViewState extends State<SplashView> {
                 child: ZoomIn(
                   duration: const Duration(seconds: 2),
                   delay: const Duration(seconds: 1),
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    child: Image.asset(
-                      "assets/icons/ic_library.png",
-                      height: 200,
-                      width: 100,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              Center(
-                child: FadeIn(
-                  duration: const Duration(seconds: 2),
-                  delay: const Duration(seconds: 1),
-                  child: Text(
-                    "Reel Drop",
-                    style: theme.textTheme.headlineLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: .center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        child: Image.asset(
+                          "assets/icons/ic_reel_drop.png",
+                          // height:245,
+                          width: 55,
+                        ),
+                      ),
+                      Text('ReelDrop',
+                      
+                      style: theme.textTheme.displayLarge?.copyWith(
+                        color: theme.colorScheme.scrim,
+                        letterSpacing: 1.2,
+                        
+                        
+                      ),)
+                    ],
                   ),
                 ),
               ),
               const SizedBox(height: 12),
-              Center(
-                child: FadeIn(
-                  duration: const Duration(seconds: 2),
-                  delay: const Duration(seconds: 1),
-                  child: Text(
-                    "Fast. Secure. Easy to use.",
-                    style: theme.textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                  ),
+
+              // Center(
+              //   child: FadeIn(
+              //     duration: const Duration(seconds: 2),
+              //     delay: const Duration(seconds: 1),
+              //     child: Text(
+              //       "Reel Drop",
+              //       style: theme.textTheme.headlineLarge?.copyWith(
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              FadeIn(
+                duration: const Duration(seconds: 2),
+                delay: const Duration(seconds: 1),
+                child: Text(
+                  "Fast. Secure. Easy to use.",
+                  style: theme.textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],

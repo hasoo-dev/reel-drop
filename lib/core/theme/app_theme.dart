@@ -7,14 +7,14 @@ class AppTheme {
   // Light Theme
   static ThemeData get lightTheme {
     return ThemeData(
-      fontFamily: 'lufga',
+      fontFamily: 'beba',
       useMaterial3: true,
       brightness: Brightness.light,
-      primaryColor: AppColors.orange,
-      
+      primaryColor: AppColors.logoColor,
+
       scaffoldBackgroundColor: AppColors.lightBackground,
       colorScheme: const ColorScheme.light(
-        primary: AppColors.orange,
+        primary: AppColors.logoColor,
         primaryContainer: AppColors.primarySoft,
         secondaryContainer: AppColors.accentSoft,
         tertiaryContainer: AppColors.purpleGlow,
@@ -40,16 +40,16 @@ class AppTheme {
         headlineLarge: TextStyle(
           color: AppColors.lightText,
           fontSize: 32,
-          fontFamily: 'lufga',
+          fontFamily: "beba",
           fontWeight: FontWeight.bold,
         ),
         bodyLarge: TextStyle(
           color: AppColors.lightText,
           fontSize: 16,
-          fontFamily: 'lufga',
+          fontFamily: "beba",
         ),
         bodyMedium: TextStyle(
-          fontFamily: 'lufga',
+          fontFamily: "beba",
           color: AppColors.lightSecondaryText,
           fontSize: 14,
         ),
@@ -70,18 +70,18 @@ class AppTheme {
   // Dark Theme
   static ThemeData get darkTheme {
     return ThemeData(
-      fontFamily: 'lufga',
+      fontFamily: 'beba',
       useMaterial3: true,
       brightness: Brightness.dark,
       primaryColor: AppColors.primary,
-      
-      scaffoldBackgroundColor: Color.fromARGB(255, 0, 0, 0),
+
+      scaffoldBackgroundColor: Colors.black,
       colorScheme: const ColorScheme.dark(
-        primary: Color.fromARGB(255, 249, 128, 59),
+        primary: Color.fromARGB(255, 255, 255, 255),
         secondary: AppColors.accent,
         surface: AppColors.darkSurface,
-        onSurface: AppColors.darkText, 
-        shadow: Colors.white,
+        onSurface: AppColors.darkText,
+        shadow: Colors.black,
         error: AppColors.error,
         scrim: Colors.white,
         background: AppColors.darkBackground,

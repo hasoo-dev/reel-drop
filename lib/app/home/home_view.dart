@@ -12,8 +12,6 @@ import 'package:video_downloder/services/home_services/home_services.dart';
 import 'package:video_downloder/widgets/video_details_bottom_sheet.dart';
 import 'package:video_downloder/core/theme/theme_controller.dart';
 
-import 'widgets/branding.dart';
-
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -71,11 +69,19 @@ class _HomeViewState extends State<HomeView> {
           appBar: AppBar(
             leading: GestureDetector(
               onTap: () => Navigator.pushNamed(context, RoutesName.info),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                margin: EdgeInsets.only(left: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 6,
+                ),
                 child: Image.asset(
                   "assets/icons/ic_info.png",
-                  color: theme.colorScheme.primary,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
             ),
@@ -96,11 +102,19 @@ class _HomeViewState extends State<HomeView> {
 
                   return GestureDetector(
                     onTap: () => ThemeController.toggle(),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary.withOpacity(0.4),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      margin: EdgeInsets.only(right: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 6,
+                      ),
                       child: Icon(
                         isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                        color: theme.colorScheme.primary,
+                        color: theme.colorScheme.onSurface,
                         size: 30,
                       ),
                     ),
@@ -123,7 +137,7 @@ class _HomeViewState extends State<HomeView> {
             onPressed: () => homeServices.openWhatsAppCommunity(),
 
             heroTag: "whatsapp",
-            child: Image.asset("assets/icons/ic_whats.png", height: 40),
+            child: Image.asset("assets/icons/ic_whats.png", height: 85),
           ),
           body: SafeArea(
             child: Padding(
@@ -142,18 +156,17 @@ class _HomeViewState extends State<HomeView> {
                             width: 49,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: theme.colorScheme.primary.withOpacity(
-                                0.08,
-                              ),
+                              color: theme.colorScheme.primary.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(16),
                             ),
-                            child: Image.asset("assets/icons/ic_library.png"),
+                            child: Image.asset("assets/icons/ic_reel_drop.png",color: Theme.of(context).colorScheme.onSurface,),
                           ),
 
                           const SizedBox(height: 16),
                           Text(
                             "Welcome to",
                             style: theme.textTheme.bodyMedium?.copyWith(
+                              fontFamily: "beba",
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1.2,
                             ),
@@ -167,7 +180,8 @@ class _HomeViewState extends State<HomeView> {
                           Text(
                             "Your video hub in one tap",
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.colorScheme.primary,
+                              fontFamily: "beba",
+                              color: theme.colorScheme.onSurface,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -236,9 +250,9 @@ class _HomeViewState extends State<HomeView> {
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: theme.colorScheme.primary
+                                          color: theme.colorScheme.onSurface
                                               .withOpacity(0.2),
-                                          blurRadius: 30,
+                                          blurRadius: 10,
                                           spreadRadius: 5,
                                         ),
                                       ],
@@ -268,7 +282,8 @@ class _HomeViewState extends State<HomeView> {
                                               : "${(state.progress * 100).toStringAsFixed(0)}%",
                                           style: theme.textTheme.headlineLarge
                                               ?.copyWith(
-                                                color: Colors.white,
+                                                color:
+                                                    theme.colorScheme.shadow,
                                                 fontWeight: FontWeight.w900,
                                               ),
                                         )
@@ -292,7 +307,7 @@ class _HomeViewState extends State<HomeView> {
                                             : "Push It..",
                                         style: theme.textTheme.labelLarge
                                             ?.copyWith(
-                                              color: Colors.white,
+                                              color: theme.colorScheme.shadow,
                                               fontWeight: FontWeight.bold,
                                               letterSpacing: 1.2,
                                             ),
@@ -307,9 +322,8 @@ class _HomeViewState extends State<HomeView> {
                       },
                     ),
 
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.20),
-                    Branding(),
-
+                    // SizedBox(height: MediaQuery.of(context).size.height * 0.20),
+                    // Branding(),
                     const SizedBox(height: 16),
                   ],
                 ),
