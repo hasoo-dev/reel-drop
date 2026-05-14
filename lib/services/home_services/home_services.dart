@@ -7,8 +7,15 @@ class HomeServices {
   /// Returns `null` if the clipboard is empty or not text.
   Future<String?> getClipboardUrl() async {
     final data = await Clipboard.getData(Clipboard.kTextPlain);
-    var url = data?.text?.trim();
-    if (url == null || url.isEmpty) return null;
+    var rawText = data?.text?.trim();
+    if (rawText == null || rawText.isEmpty) return null;
+    
+    // Extract actual URL from text (e.g. "Watch this! https://tiktok.com/...")
+    final urlRegExp = RegExp(r'(https?:\/\/[^\s]+)');
+    final match = urlRegExp.firstMatch(rawText);
+    if (match == null) return null;
+    
+    var url = match.group(1)!;
     
     // Clean tracking parameters for better scraping
     if (url.contains('instagram.com') || url.contains('instagr.am')) {

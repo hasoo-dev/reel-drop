@@ -11,6 +11,7 @@ import 'package:video_downloder/core/utils/extensions/flush_bar_extension.dart';
 import 'package:video_downloder/services/home_services/home_services.dart';
 import 'package:video_downloder/widgets/video_details_bottom_sheet.dart';
 import 'package:video_downloder/core/theme/theme_controller.dart';
+import 'package:video_downloder/models/download_model/download_response.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -43,16 +44,56 @@ class _HomeViewState extends State<HomeView> {
             message: "Video downloaded successfully!",
           );
         } else if (state is ReelDropLoaded) {
-          showModalBottomSheet(
-            context: context,
-            backgroundColor: Colors.transparent,
-            isScrollControlled: true,
-            builder: (_) => VideoDetailsBottomSheet(
-              response: state.downloadResponse!,
-              platform: _currentPlatform ?? "Unknown",
-              originalUrl: _lastUrl ?? "",
-            ),
-          );
+          final data = state.downloadResponse?.data;
+          if (data != null) {
+            final List<Formats> formats = [];
+            if (data.formats != null && data.formats!.isNotEmpty) {
+              formats.addAll(data.formats!);
+            }
+            if (data.url != null && data.url!.isNotEmpty && !formats.any((f) => f.url == data.url)) {
+              formats.add(Formats(url: data.url, quality: "Best Quality", ext: "mp4", hasAudio: true));
+            }
+            
+            if (formats.isNotEmpty) {
+              Formats? bestFormat;
+              final audioFormats = formats.where((f) => f.hasAudio != false).toList();
+              
+              int getQualityValue(Formats f) {
+                if (f.height != null && f.height! > 0) return f.height!;
+                if (f.quality != null) {
+                  final match = RegExp(r'(\d+)p').firstMatch(f.quality!);
+                  if (match != null) {
+                    return int.tryParse(match.group(1)!) ?? 0;
+                  }
+                }
+                return 0;
+              }
+
+              if (audioFormats.isNotEmpty) {
+                audioFormats.sort((a, b) => getQualityValue(b).compareTo(getQualityValue(a)));
+                bestFormat = audioFormats.first;
+              } else {
+                formats.sort((a, b) => getQualityValue(b).compareTo(getQualityValue(a)));
+                bestFormat = formats.first;
+              }
+
+              if (bestFormat.url != null) {
+                context.read<ReelDropBloc>().add(
+                  DownloadVideo(
+                    url: _lastUrl ?? "",
+                    videoUrl: bestFormat.url!,
+                    title: data.title ?? "video",
+                    ext: bestFormat.ext ?? "mp4",
+                    uploader: data.uploader,
+                  ),
+                );
+              }
+            } else {
+              context.flushBarErrorMessage(
+                message: "No downloadable formats found for this video.",
+              );
+            }
+          }
         }
       },
       builder: (context, state) {
@@ -321,9 +362,6 @@ class _HomeViewState extends State<HomeView> {
                         );
                       },
                     ),
-
-                    // SizedBox(height: MediaQuery.of(context).size.height * 0.20),
-                    // Branding(),
                     const SizedBox(height: 16),
                   ],
                 ),
