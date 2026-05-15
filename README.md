@@ -2,7 +2,7 @@
 
 <p align="center">
   <!-- TODO: Replace with your actual logo path if available -->
-  <img src="assets/images/logo.png" width="200" alt="Reel Drop Logo"/>
+  <img src="assets/icons/ic_reel_d.png" width="200" alt="Reel Drop Logo"/>
 </p>
 
 <p align="center">
