@@ -9,7 +9,6 @@ import 'package:video_downloder/bloc/reel_bloc/reel_drop_state.dart';
 import 'package:video_downloder/core/routes/routes_name.dart';
 import 'package:video_downloder/core/utils/extensions/flush_bar_extension.dart';
 import 'package:video_downloder/services/home_services/home_services.dart';
-import 'package:video_downloder/widgets/video_details_bottom_sheet.dart';
 import 'package:video_downloder/core/theme/theme_controller.dart';
 import 'package:video_downloder/models/download_model/download_response.dart';
 
@@ -22,7 +21,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final homeServices = HomeServices();
-  String? _currentPlatform;
+  String? currentPlatform;
   String? _lastUrl;
 
   @override
@@ -245,7 +244,7 @@ class _HomeViewState extends State<HomeView> {
                                       if (url != null) {
                                         setState(() {
                                           _lastUrl = url;
-                                          _currentPlatform = homeServices
+                                          currentPlatform = homeServices
                                               .detectPlatformFromUrl(url);
                                         });
                                         context.read<ReelDropBloc>().add(
