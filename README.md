@@ -19,11 +19,21 @@
 
 ## 📱 Screenshots
 
-| Home | Scanner | Downloads |
+| Splash | Dark Mode | Light Mode |
 |:---:|:---:|:---:|
-| <img src="docs/assets/home.png" width="200"/> | <img src="docs/assets/scanner.png" width="200"/> | <img src="docs/assets/downloads.png" width="200"/> |
+| <img src="assets/screenshots/ic_splash.png" width="200"/> | <img src="assets/screenshots/ic_dark.png" width="200"/> | <img src="assets/screenshots/ic_light.png" width="200"/> |
 
-> **Note:** Add your actual screenshot images to the `docs/assets/` directory.
+<br>
+
+| Download Progress | Info | No URL |
+|:---:|:---:|:---:|
+| <img src="assets/screenshots/ic_download_progress.png" width="200"/> | <img src="assets/screenshots/ic_info.png" width="200"/> | <img src="assets/screenshots/ic_no_url.png" width="200"/> |
+
+<br>
+
+| Video Download | | |
+|:---:|:---:|:---:|
+| <img src="assets/screenshots/video%20download.png" width="200"/> | | |
 
 ## 🛠️ Tech Stack
 
