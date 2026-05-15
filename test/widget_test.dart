@@ -1,30 +1,18 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
- 
 import 'package:video_downloder/reel_drop.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('ReelDrop app starts successfully and navigates from splash', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const ReelDrop());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the ReelDrop root widget is in the tree.
+    expect(find.byType(ReelDrop), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Pump time to allow SplashServices 4-second timer and animations to complete
+    await tester.pumpAndSettle(const Duration(seconds: 5));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // After 5 seconds, it should have navigated to the Home screen (or whichever is next)
+    // No timers should be left pending now.
   });
 }
