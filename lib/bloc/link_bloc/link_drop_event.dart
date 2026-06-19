@@ -1,19 +1,19 @@
-class ReelDropEvent {
+class LinkDropEvent {
   final String url;
-  ReelDropEvent({required this.url});
+  LinkDropEvent({required this.url});
 }
 
-class FetchVideoData extends ReelDropEvent {
+class FetchVideoData extends LinkDropEvent {
   FetchVideoData({required super.url});
 }
 
-class DownloadVideo extends ReelDropEvent {
+class ExtrackingVideo extends LinkDropEvent  {
   final String videoUrl;
   final String title;
   final String ext;
   final String? uploader;
 
-  DownloadVideo({
+  ExtrackingVideo({
     required super.url,
     required this.videoUrl,
     required this.title,

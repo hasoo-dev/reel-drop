@@ -1,40 +1,42 @@
 import 'package:dio/dio.dart';
-import 'package:video_downloder/bloc/reel_bloc/reel_drop_event.dart';
-import 'package:video_downloder/bloc/reel_bloc/reel_drop_state.dart';
-import 'package:video_downloder/models/download_model/download_request.dart';
-import 'package:video_downloder/repository/reel_drop_api/reel_drop_repositry.dart';
-import 'package:video_downloder/services/download_service/download_service.dart';
+ 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ReelDropBloc extends Bloc<ReelDropEvent, ReelDropState> {
-  final ReelDropApiRepositry _apiRepositry;
-  final DownloadService _downloadService = DownloadService();
+import '../../models/extract_model/exract_request.dart';
+import '../../repository/link_drop_api/link_drop_repositry.dart';
+import '../../services/fetching_service/fetching_service.dart';
+import 'link_drop_event.dart';
+import 'link_drop_state.dart';
 
-  ReelDropBloc(this._apiRepositry) : super(ReelDropInitial()) {
+class LinkDropBloc extends Bloc<LinkDropEvent , LinkDropState> {
+  final LinkDropApiRepositry _apiRepositry;
+  final  _fetchService = FetchingService();
+
+  LinkDropBloc(this._apiRepositry) : super(LinkDropInitial()) {
     on<FetchVideoData>(_onFetchVideoData);
-    on<DownloadVideo>(_onDownloadVideo);
+    on<ExtrackingVideo>(_onExtractVideo);
   }
 
-  Future<void> _onFetchVideoData(FetchVideoData event, Emitter<ReelDropState> emit) async {
-    emit(ReelDropLoading());
+  Future<void> _onFetchVideoData(FetchVideoData event, Emitter<LinkDropState> emit) async {
+    emit(LinkDropLoading());
     try {
-      final response = await _apiRepositry.downloadVideo(
-        DownloadRequest(url: event.url),
+      final response = await _apiRepositry.extractVideo(
+        ExractRequest (url: event.url),
       );
       if (response.success == true) {
-        emit(ReelDropLoaded(downloadResponse: response));
+        emit(LinkDropLoaded(extractResponse: response));
       } else {
-        emit(ReelDropError(error: "Video not accessible. Try another link."));
+        emit(LinkDropError(error: "Fetch not accessible. Try another link."));
       }
     } catch (e) {
       String errorMessage = _mapErrorToMessage(e);
-      emit(ReelDropError(error: errorMessage));
+      emit(LinkDropError(error: errorMessage));
     }
   }
 
-  Future<void> _onDownloadVideo(DownloadVideo event, Emitter<ReelDropState> emit) async {
-    final currentResponse = state.downloadResponse;
-    emit(ReelDropDownloading(currentProgress: 0.0, downloadResponse: currentResponse));
+  Future<void>_onExtractVideo(ExtrackingVideo event, Emitter<LinkDropState> emit) async {
+    final currentResponse = state.extractResponse;
+    emit(LinkDropExtracting(currentProgress: 0.0, extractResponse: currentResponse));
     
     try {
       final sanitized = event.title.replaceAll(RegExp(r'[^\w\s]+'), '_').replaceAll(RegExp(r'_+'), '_').trim();
@@ -45,14 +47,14 @@ class ReelDropBloc extends Bloc<ReelDropEvent, ReelDropState> {
         baseName = '${safeUploader.isNotEmpty ? safeUploader : 'video'}_${DateTime.now().millisecondsSinceEpoch}';
       }
       final fileName = '$baseName.${event.ext}';
-      await _downloadService.downloadAndSaveVideo(
+      await _fetchService.fetchAndSaveVideo(
         url: event.videoUrl,
         fileName: fileName,
         onProgress: (progress) {
-          emit(ReelDropDownloading(currentProgress: progress, downloadResponse: currentResponse));
+          emit(LinkDropExtracting(currentProgress: progress, extractResponse: currentResponse));
         },
       );
-      emit(ReelDropDownloaded());
+      emit(LinkDropExtract());
     } catch (e) {
       String errorMessage = _mapErrorToMessage(e);
       final isPinterest = (event.videoUrl.toLowerCase().contains('pinimg.com') ||
@@ -60,7 +62,7 @@ class ReelDropBloc extends Bloc<ReelDropEvent, ReelDropState> {
       if (isPinterest && errorMessage.contains('Network error')) {
         errorMessage = "Pinterest proxy failed. Please try again or ensure the server is reachable.";
       }
-      emit(ReelDropError(error: "Download failed: $errorMessage"));
+      emit(LinkDropError(error: "Fetched failed: $errorMessage"));
     }
   }
 

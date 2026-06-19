@@ -1,7 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:video_downloder/core/componenet/positioned_circle.dart';
-import 'package:video_downloder/services/splash_services/splash_services.dart';
+
+import '../../core/componenet/positioned_circle.dart';
+import '../../services/splash_services/splash_services.dart';
+ 
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -44,12 +46,12 @@ class _SplashViewState extends State<SplashView> {
                       Container(
                         padding: const EdgeInsets.all(20),
                         child: Image.asset(
-                          "assets/icons/ic_reel_drop.png",
+                          "assets/icons/ic_link_drop.png",
                           // height:245,
                           width: 55,
                         ),
                       ),
-                      Text('ReelDrop',
+                      Text('LinkDrop',
                       
                       style: theme.textTheme.displayLarge?.copyWith(
                         color: theme.colorScheme.scrim,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:video_downloder/widgets/reel_drop_info_content.dart';
+
+import '../../widgets/link_drop_info_content.dart';
+ 
 
 class InfoView extends StatelessWidget {
   const InfoView({super.key});
@@ -42,7 +44,7 @@ fontFamily: "beba",
           ),
         ),
       ),
-      body: const ReelDropInfoContent(), // 🔥 Separate widget
+      body: const LinkDropInfoContent(), // 🔥 Separate widget
     );
   }
 }

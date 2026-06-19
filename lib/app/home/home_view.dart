@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:video_downloder/bloc/reel_bloc/reel_drop_bloc.dart';
-import 'package:video_downloder/bloc/reel_bloc/reel_drop_event.dart';
-import 'package:video_downloder/bloc/reel_bloc/reel_drop_state.dart';
-import 'package:video_downloder/core/routes/routes_name.dart';
-import 'package:video_downloder/core/utils/extensions/flush_bar_extension.dart';
-import 'package:video_downloder/services/home_services/home_services.dart';
-import 'package:video_downloder/core/theme/theme_controller.dart';
-import 'package:video_downloder/models/download_model/download_response.dart';
+import '../../bloc/link_bloc/link_drop_bloc.dart';
+import '../../bloc/link_bloc/link_drop_event.dart';
+import '../../bloc/link_bloc/link_drop_state.dart';
+import '../../core/routes/routes_name.dart';
+import '../../core/theme/theme_controller.dart';
+import '../../core/utils/extensions/flush_bar_extension.dart';
+import '../../models/extract_model/extract_response.dart';
+import '../../services/home_services/home_services.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -28,35 +28,44 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return BlocConsumer<ReelDropBloc, ReelDropState>(
+    return BlocConsumer<LinkDropBloc, LinkDropState>(
       listener: (context, state) {
-        if (state is ReelDropError) {
-          if (state.error == "YOUTUBE_BOT_DETECTION") {
-            _showBotDetectionDialog(context);
-          } else {
-            context.flushBarErrorMessage(
-              message: state.error ?? "An error occurred",
-            );
-          }
-        } else if (state is ReelDropDownloaded) {
-          context.flushBarSuccessMessage(
-            message: "Video downloaded successfully!",
-          );
-        } else if (state is ReelDropLoaded) {
-          final data = state.downloadResponse?.data;
+        if (state is LinkDropError) {
+          // if (state.error == "YOUTUBE_BOT_DETECTION") {
+          //   _showBotDetectionDialog(context);
+          // } else {   
+          //   context.flushBarErrorMessage(
+          //     message: state.error ?? "An error occurred",
+          //   );
+          // }
+        } else if (state is LinkDropExtract) {
+          context.flushBarSuccessMessage(message: " Fetching Successfully 🌱");
+        } else if (state is LinkDropLoaded) {
+          final data = state.extractResponse?.data;
           if (data != null) {
             final List<Formats> formats = [];
             if (data.formats != null && data.formats!.isNotEmpty) {
               formats.addAll(data.formats!);
             }
-            if (data.url != null && data.url!.isNotEmpty && !formats.any((f) => f.url == data.url)) {
-              formats.add(Formats(url: data.url, quality: "Best Quality", ext: "mp4", hasAudio: true));
+            if (data.url != null &&
+                data.url!.isNotEmpty &&
+                !formats.any((f) => f.url == data.url)) {
+              formats.add(
+                Formats(
+                  url: data.url,
+                  quality: "Best Quality",
+                  ext: "mp4",
+                  hasAudio: true,
+                ),
+              );
             }
-            
+
             if (formats.isNotEmpty) {
               Formats? bestFormat;
-              final audioFormats = formats.where((f) => f.hasAudio != false).toList();
-              
+              final audioFormats = formats
+                  .where((f) => f.hasAudio != false)
+                  .toList();
+
               int getQualityValue(Formats f) {
                 if (f.height != null && f.height! > 0) return f.height!;
                 if (f.quality != null) {
@@ -69,16 +78,20 @@ class _HomeViewState extends State<HomeView> {
               }
 
               if (audioFormats.isNotEmpty) {
-                audioFormats.sort((a, b) => getQualityValue(b).compareTo(getQualityValue(a)));
+                audioFormats.sort(
+                  (a, b) => getQualityValue(b).compareTo(getQualityValue(a)),
+                );
                 bestFormat = audioFormats.first;
               } else {
-                formats.sort((a, b) => getQualityValue(b).compareTo(getQualityValue(a)));
+                formats.sort(
+                  (a, b) => getQualityValue(b).compareTo(getQualityValue(a)),
+                );
                 bestFormat = formats.first;
               }
 
               if (bestFormat.url != null) {
-                context.read<ReelDropBloc>().add(
-                  DownloadVideo(
+                context.read<LinkDropBloc>().add(
+                  ExtrackingVideo(
                     url: _lastUrl ?? "",
                     videoUrl: bestFormat.url!,
                     title: data.title ?? "video",
@@ -89,19 +102,19 @@ class _HomeViewState extends State<HomeView> {
               }
             } else {
               context.flushBarErrorMessage(
-                message: "No downloadable formats found for this video.",
+                message: "No Fetching  formats found ",
               );
             }
           }
         }
       },
       builder: (context, state) {
-        bool isDownloading = false;
+        bool isExtracting = false;
         bool isFetching = false;
 
-        if (state is ReelDropDownloading) {
-          isDownloading = true;
-        } else if (state is ReelDropLoading) {
+        if (state is LinkDropExtracting) {
+          isExtracting = true;
+        } else if (state is LinkDropLoading) {
           isFetching = true;
         }
 
@@ -199,7 +212,10 @@ class _HomeViewState extends State<HomeView> {
                               color: theme.colorScheme.primary.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(16),
                             ),
-                            child: Image.asset("assets/icons/ic_reel_drop.png",color: Theme.of(context).colorScheme.onSurface,),
+                            child: Image.asset(
+                              "assets/icons/ic_link_drop.png",
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                           ),
 
                           const SizedBox(height: 16),
@@ -212,7 +228,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
                           Text(
-                            "ReelDrop",
+                            "LinkDrop",
                             style: theme.textTheme.headlineMedium?.copyWith(
                               fontWeight: FontWeight.w900,
                             ),
@@ -236,7 +252,7 @@ class _HomeViewState extends State<HomeView> {
                           alignment: Alignment.center,
                           children: [
                             GestureDetector(
-                              onTap: (isDownloading || isFetching)
+                              onTap: (isExtracting || isFetching)
                                   ? null
                                   : () async {
                                       final url = await homeServices
@@ -247,7 +263,7 @@ class _HomeViewState extends State<HomeView> {
                                           currentPlatform = homeServices
                                               .detectPlatformFromUrl(url);
                                         });
-                                        context.read<ReelDropBloc>().add(
+                                        context.read<LinkDropBloc>().add(
                                           FetchVideoData(url: url),
                                         );
                                       } else {
@@ -260,12 +276,12 @@ class _HomeViewState extends State<HomeView> {
                                 alignment: Alignment.center,
                                 children: [
                                   // Outer Progress Ring
-                                  if (isDownloading || isFetching)
+                                  if (isExtracting || isFetching)
                                     SizedBox(
                                       width: size + 20,
                                       height: size + 20,
                                       child: CircularProgressIndicator(
-                                        value: isDownloading
+                                        value: isExtracting
                                             ? state.progress
                                             : null,
                                         strokeWidth: 4,
@@ -315,15 +331,14 @@ class _HomeViewState extends State<HomeView> {
                                   Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      if (isFetching || isDownloading)
+                                      if (isFetching || isExtracting)
                                         Text(
                                           isFetching
                                               ? "..."
                                               : "${(state.progress * 100).toStringAsFixed(0)}%",
                                           style: theme.textTheme.headlineLarge
                                               ?.copyWith(
-                                                color:
-                                                    theme.colorScheme.shadow,
+                                                color: theme.colorScheme.shadow,
                                                 fontWeight: FontWeight.w900,
                                               ),
                                         )
@@ -342,7 +357,7 @@ class _HomeViewState extends State<HomeView> {
                                       Text(
                                         isFetching
                                             ? "Fetching..."
-                                            : isDownloading
+                                            : isExtracting
                                             ? "Dripping..."
                                             : "Push It..",
                                         style: theme.textTheme.labelLarge
@@ -371,60 +386,62 @@ class _HomeViewState extends State<HomeView> {
       },
     );
   }
-
-  void _showBotDetectionDialog(BuildContext context) {
-    final theme = Theme.of(context);
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: theme.scaffoldBackgroundColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          title: Row(
-            children: [
-              const Icon(Icons.security, color: Colors.redAccent, size: 28),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  "I'm not a robot",
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 8),
-              Text(
-                "YouTube requires a bot verification to download this video. This happens when there are too many download requests from our servers.",
-                style: theme.textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                "Try again later or use an alternate video link.",
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.primary,
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                "Understood",
-                style: TextStyle(color: theme.colorScheme.primary),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
+
+
+//   void _showBotDetectionDialog(BuildContext context) {
+//     final theme = Theme.of(context);
+//     showDialog(
+//       context: context,
+//       builder: (context) {
+//         return AlertDialog(
+//           backgroundColor: theme.scaffoldBackgroundColor,
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(16),
+//           ),
+//           title: Row(
+//             children: [
+//               const Icon(Icons.security, color: Colors.redAccent, size: 28),
+//               const SizedBox(width: 8),
+//               Expanded(
+//                 child: Text(
+//                   "I'm not a robot",
+//                   style: theme.textTheme.titleMedium?.copyWith(
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//           content: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               const SizedBox(height: 8),
+//               Text(
+//                 "YouTube requires a bot verification to download this video. This happens when there are too many download requests from our servers.",
+//                 style: theme.textTheme.bodyMedium,
+//               ),
+//               const SizedBox(height: 16),
+//               Text(
+//                 "Try again later or use an alternate video link.",
+//                 style: theme.textTheme.bodyMedium?.copyWith(
+//                   fontWeight: FontWeight.w600,
+//                   color: theme.colorScheme.primary,
+//                 ),
+//               ),
+//             ],
+//           ),
+//           actions: [
+//             TextButton(
+//               onPressed: () => Navigator.pop(context),
+//               child: Text(
+//                 "Understood",
+//                 style: TextStyle(color: theme.colorScheme.primary),
+//               ),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }

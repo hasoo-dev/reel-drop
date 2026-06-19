@@ -2,7 +2,9 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:video_downloder/core/routes/routes_name.dart';
+ 
+
+import '../../core/routes/routes_name.dart';
 // import 'package:video_downloder/services/session_manager/session_controller.dart';
 
 class SplashServices {

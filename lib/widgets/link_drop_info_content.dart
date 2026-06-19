@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ReelDropInfoContent extends StatelessWidget {
-  const ReelDropInfoContent({super.key});
+class LinkDropInfoContent extends StatelessWidget {
+  const LinkDropInfoContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +13,15 @@ class ReelDropInfoContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "About ReelDrop",
+            "About LinkDrop",
             style: theme.textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 16),
           Text(
-            "ReelDrop is your all-in-one video hub. "
-            "Access and enjoy content from multiple platforms in one simple and clean interface.",
+            "LinkDrop is a minimalist local media helper designed to organize and stream your public web URLs. "
+            "Experience an uncluttered interface focused strictly on content playback and link management.",
             style: theme.textTheme.bodyMedium,
           ),
           const SizedBox(height: 24),
@@ -34,24 +34,23 @@ class ReelDropInfoContent extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          Text("• Smooth and minimal design"),
-          Text("• Fast video access"),
-          Text("• Light & Dark theme support"),
-          Text("• Easy and user-friendly interface"),
+          Text("• Smooth and minimal interface"),
+          Text("• Instant clipboard link processing"),
+          Text("• Full Light & Dark theme support"),
+          Text("• Secure local stream playback"),
 
           const SizedBox(height: 24),
 
           Text(
-            "Important Note",
+            "Privacy & Terms",
             style: theme.textTheme.titleMedium!.copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 12),
           Text(
-            "ReelDrop is intended for personal use only. "
-            "Users are responsible for respecting platform policies "
-            "and content ownership rights.",
+            "LinkDrop is a local productivity utility. It does not host, store, or re-share any external files. "
+            "All processes run locally on your device to ensure maximum privacy and data security.",
             style: theme.textTheme.bodySmall,
           ),
         ],

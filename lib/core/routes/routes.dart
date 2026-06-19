@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:video_downloder/core/routes/routes_name.dart';
+ 
 import '../../app/view.dart';
+import 'routes_name.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -18,10 +19,10 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const InfoView(),
         );
-      case RoutesName.noAds:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const NoAdsView(),
-        );
+      // case RoutesName.noAds:
+      //   return MaterialPageRoute(
+      //     builder: (BuildContext context) => const NoAdsView(),
+      //   );
 
       default:
         return MaterialPageRoute(

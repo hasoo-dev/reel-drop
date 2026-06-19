@@ -7,7 +7,7 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// Load keystore properties
+// Load keystore properties cleanly
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
@@ -15,7 +15,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.example.video_downloder"
+    namespace = "com.hassan.linkdrop"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -25,12 +25,11 @@ android {
     }
 
     kotlinOptions {
-        // Use classic jvmTarget string for compatibility with current Gradle/Kotlin plugin
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
-        applicationId = "com.example.video_downloder"
+        applicationId = "com.hassan.linkdrop"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -39,18 +38,30 @@ android {
 
     signingConfigs {
         create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
-            storeFile = file(keystoreProperties["storeFile"] as String)
-            storePassword = keystoreProperties["storePassword"] as String
+            // Safe property fetching to avoid NullPointerExceptions during initialization
+            if (keystorePropertiesFile.exists()) {
+                keyAlias = keystoreProperties["keyAlias"] as? String
+                keyPassword = keystoreProperties["keyPassword"] as? String
+                storePassword = keystoreProperties["storePassword"] as? String
+                
+                val storeFilePath = keystoreProperties["storeFile"] as? String
+                if (storeFilePath != null) {
+                    // Points directly to android/app/upload-keystore.p12 safely
+                    storeFile = project.file(storeFilePath)
+                }
+            }
         }
     }
 
     buildTypes {
         getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
+            // Apply the signing config safely if properties are present
+            if (keystorePropertiesFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
 
-            // Kotlin DSL requires 'isMinifyEnabled' and 'isShrinkResources'
+            // Keep these false for your initial testing builds; 
+            // Turn true later if you want deep optimization & code shrinking.
             isMinifyEnabled = false
             isShrinkResources = false
 
@@ -61,7 +72,6 @@ android {
         }
 
         getByName("debug") {
-            // Optional: use debug signing config
             signingConfig = signingConfigs.getByName("debug")
         }
     }

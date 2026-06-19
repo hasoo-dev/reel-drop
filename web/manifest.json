@@ -1,6 +1,6 @@
 {
-    "name": "video_downloder",
-    "short_name": "video_downloder",
+    "name": "LinkDrop",
+    "short_name": "LinkDrop",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

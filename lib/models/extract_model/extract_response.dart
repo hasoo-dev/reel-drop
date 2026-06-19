@@ -1,10 +1,10 @@
-class DownloadResponse {
+class ExtractResponse {
   bool? success;
   Data? data;
 
-  DownloadResponse({this.success, this.data});
+  ExtractResponse({this.success, this.data});
 
-  DownloadResponse.fromJson(Map<String, dynamic> json) {
+  ExtractResponse.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }

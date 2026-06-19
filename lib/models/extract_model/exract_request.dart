@@ -1,9 +1,9 @@
-class DownloadRequest {
+class ExractRequest {
   String? url;
 
-  DownloadRequest({this.url});
+  ExractRequest ({this.url});
 
-  DownloadRequest.fromJson(Map<String, dynamic> json) {
+  ExractRequest .fromJson(Map<String, dynamic> json) {
     url = json['url'];
   }
 

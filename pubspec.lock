@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  change_package_name:
+    dependency: "direct dev"
+    description:
+      name: change_package_name
+      sha256: "54ccc2eedaa4a279fa82ecaa1fd70aafbec88ed59f3a676977e3d54a938d5fec"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   characters:
     dependency: transitive
     description:
@@ -89,22 +97,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  device_frame:
-    dependency: transitive
-    description:
-      name: device_frame
-      sha256: "7b2ebb2a09d6cc0f086b51bd1412d7be83e0170056a7290349169be41164c86a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
-  device_preview:
-    dependency: "direct main"
-    description:
-      name: device_preview
-      sha256: "88aa1cc73ee9a8ec771b309dcbc4000cc66b5d8456b825980997640ab1195bf5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.1"
   dio:
     dependency: "direct main"
     description:
@@ -174,11 +166,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
-  flutter_localizations:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -237,14 +224,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  freezed_annotation:
-    dependency: transitive
-    description:
-      name: freezed_annotation
-      sha256: "7294967ff0a6d98638e7acb774aac3af2550777accd8149c90af5b014e6d44d8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
   gal:
     dependency: "direct main"
     description:
@@ -285,14 +264,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
-  intl:
-    dependency: transitive
-    description:
-      name: intl
-      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.20.2"
   js:
     dependency: transitive
     description:
@@ -301,14 +272,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
-  json_annotation:
-    dependency: transitive
-    description:
-      name: json_annotation
-      sha256: cb09e7dac6210041fad964ed7fbee004f14258b4eca4040f72d1234062ace4c8
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.11.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -377,10 +340,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: "23f08335362185a5ea2ad3a4e597f1375e78bce8a040df5c600c8d3552ef2394"
+      sha256: "1741988757a65eb6b36abe716829688cf01910bbf91c34354ff7ec1c3de2b349"
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.0"
+    version: "1.18.0"
   mime:
     dependency: transitive
     description:
@@ -469,14 +432,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      sha256: "67fc27ed9639506c856c840ccce7594d0bdcd91bc8d53d6e52359449a1d50602"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.11.1"
   permission_handler:
     dependency: "direct main"
     description:
@@ -557,62 +512,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
-  shared_preferences:
-    dependency: transitive
-    description:
-      name: shared_preferences
-      sha256: "2939ae520c9024cb197fc20dee269cd8cdbf564c8b5746374ec6cacdc5169e64"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.4"
-  shared_preferences_android:
-    dependency: transitive
-    description:
-      name: shared_preferences_android
-      sha256: "8374d6200ab33ac99031a852eba4c8eb2170c4bf20778b3e2c9eccb45384fb41"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.21"
-  shared_preferences_foundation:
-    dependency: transitive
-    description:
-      name: shared_preferences_foundation
-      sha256: "4e7eaffc2b17ba398759f1151415869a34771ba11ebbccd1b0145472a619a64f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.6"
-  shared_preferences_linux:
-    dependency: transitive
-    description:
-      name: shared_preferences_linux
-      sha256: "580abfd40f415611503cae30adf626e6656dfb2f0cee8f465ece7b6defb40f2f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  shared_preferences_platform_interface:
-    dependency: transitive
-    description:
-      name: shared_preferences_platform_interface
-      sha256: "57cbf196c486bc2cf1f02b85784932c6094376284b3ad5779d1b1c6c6a816b80"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  shared_preferences_web:
-    dependency: transitive
-    description:
-      name: shared_preferences_web
-      sha256: c49bd060261c9a3f0ff445892695d6212ff603ef3115edbb448509d407600019
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.3"
-  shared_preferences_windows:
-    dependency: transitive
-    description:
-      name: shared_preferences_windows
-      sha256: "94ef0f72b2d71bc3e700e025db3710911bd51a71cefb65cc609dd0d9a982e3c1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -634,30 +533,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.2"
-  speech_to_text:
-    dependency: "direct main"
-    description:
-      name: speech_to_text
-      sha256: c07557664974afa061f221d0d4186935bea4220728ea9446702825e8b988db04
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.3.0"
-  speech_to_text_platform_interface:
-    dependency: transitive
-    description:
-      name: speech_to_text_platform_interface
-      sha256: a1935847704e41ee468aad83181ddd2423d0833abe55d769c59afca07adb5114
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.0"
-  speech_to_text_windows:
-    dependency: transitive
-    description:
-      name: speech_to_text_windows
-      sha256: "2c9846d18253c7bbe059a276297ef9f27e8a2745dead32192525beb208195072"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0+beta.8"
   stack_trace:
     dependency: transitive
     description:
@@ -694,10 +569,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "8161c84903fd860b26bfdefb7963b3f0b68fee7adea0f59ef805ecca346f0c7a"
+      sha256: "949a932224383300f01be9221c39180316445ecb8e7547f70a41a35bf421fb9e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.10"
+    version: "0.7.11"
   typed_data:
     dependency: transitive
     description:

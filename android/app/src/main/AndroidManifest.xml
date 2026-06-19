@@ -9,7 +9,7 @@
     <!-- Needed for speech_to_text voice input -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
-        android:label="ReelDrop"
+        android:label="LinkDrop"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
