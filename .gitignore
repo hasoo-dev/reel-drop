@@ -26,4 +26,8 @@ ios/Flutter/Flutter.podspec
 *.log
 .idea/
 .vscode/
+
+# Local URL Configuration
+lib/core/utils/app_url/app_url.dart
+
 /lib/core/utils/
