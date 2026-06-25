@@ -25,6 +25,7 @@ dependencies:
   http: ^1.2.2
   another_flushbar: ^1.12.32
   url_launcher: ^6.2.5
+  device_preview: 
 
 dev_dependencies:
   flutter_test:

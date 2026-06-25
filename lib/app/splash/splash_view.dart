@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/componenet/positioned_circle.dart';
+import '../../core/component/positioned_circle.dart';
 import '../../services/splash_services/splash_services.dart';
  
 

@@ -27,14 +27,14 @@ class HomeServices {
         url = uri.replace(queryParameters: newParams).toString();
         // Remove trailing '?' if replace left it
         if (url.endsWith('?')) url = url.substring(0, url.length - 1);
-        print("HomeServices: Cleaned Instagram URL -> $url");
+        print("HomeServices: Cleaned  URL -> $url");
       }
     } else if (url.contains('vt.tiktok.com')) {
       final uri = Uri.parse(url);
       if (uri.queryParameters.isNotEmpty) {
         url = uri.replace(queryParameters: {}).toString();
         if (url.endsWith('?')) url = url.substring(0, url.length - 1);
-        print("HomeServices: Cleaned TikTok URL -> $url");
+        print("HomeServices: Cleaned  URL -> $url");
       }
     }
     return url;
@@ -50,7 +50,7 @@ class HomeServices {
     if (lower.contains('pin.it') || lower.contains('pinterest.com')) return 'Pinterest';
     if (lower.contains('whatsapp.com')) return 'WhatsApp';
     if (lower.contains('x.com') || lower.contains('twitter.com')) return 'X';
-    if (lower.contains('youtube.com') || lower.contains('youtu.be')) return 'YouTube';
+     
     return null;
   }
 
